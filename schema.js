@@ -2,7 +2,6 @@ exports.typeDefs = `
   type List {
     _id: ID 
     name: String!
-    songs: [Song]
   }
   
   type User {
@@ -20,10 +19,12 @@ exports.typeDefs = `
   type Query {
     getAllSongsLists: [Song]
     getPlayList(playList: String!): [Song]
+    getAllLists: [List]
   }
   
   type Mutation {
     addList(name: String!): List
     addSong(name: String!, playList: String!): Song
+    deleteSong(_id: ID!): Song
   }
 `;
