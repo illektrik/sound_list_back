@@ -16,8 +16,8 @@ exports.resolvers = {
     addList: async (root, {name}, {List}) => {
       return await new List({name}).save();
     },
-    addSong: async (root, {name, playList}, {Song}) => {
-      return await new Song({name, playList}).save();
+    addSong: async (root, {name, playList, link}, {Song}) => {
+      return await new Song({name, playList, link}).save();
     },
     deleteSong: async (root, {_id}, {Song}) => {
       return await Song.deleteOne({_id});

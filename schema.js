@@ -14,6 +14,8 @@ exports.typeDefs = `
     _id: ID
     name: String!
     playList: String!
+    link: String!
+    author: String!
   }
   
   type Query {
@@ -24,7 +26,7 @@ exports.typeDefs = `
   
   type Mutation {
     addList(name: String!): List
-    addSong(name: String!, playList: String!): Song
+    addSong(name: String!, playList: String!, link: String!): Song
     deleteSong(_id: ID!): Song
   }
 `;
