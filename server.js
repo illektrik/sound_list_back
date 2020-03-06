@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config({path: 'variables.env'});
 
 const { graphiqlExpress, graphqlExpress} = require('apollo-server-express');
@@ -26,15 +27,28 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(async (req, res, next) => {
+  const token = req.headers['authorization'];
+ if (token !== null) {
+   try {
+     req.currentUser = await jwt.verify(token, process.env.SECRET);
+   } catch(err) {
+      console.error(err);
+   }
+ }
+  next();
+});
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
-app.use('/graphql', bodyParser.json(), graphqlExpress({
+app.use('/graphql', bodyParser.json(), graphqlExpress(({currentUser}) => ({
   schema,
   context: {
     List,
     User,
-    Song
+    Song,
+    currentUser
   }
-}));
+}))
+);
 
 mongoose
   .connect(process.env.MONGO_URI)

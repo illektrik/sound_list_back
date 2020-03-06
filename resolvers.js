@@ -1,3 +1,11 @@
+const jwt = require('jsonwebtoken');
+
+const createToken = (user, secret, expiresIn) => {
+  const {username} = user;
+
+  return jwt.sign({username}, secret, {expiresIn})
+};
+
 exports.resolvers = {
 
   Query: {
@@ -9,6 +17,13 @@ exports.resolvers = {
     },
     getAllLists: async (root, args, {List}) => {
       return await List.find();
+    },
+    getCurrentUser: async (root, args, {currentUser, User}) => {
+      if (!currentUser) {
+        return null;
+      }
+      const user = await User.findOne({username: currentUser.username});
+      return user;
     }
   },
 
@@ -33,6 +48,30 @@ exports.resolvers = {
           }},
         {new: true}
       )
+    },
+    deleteList: async (root, {_id}, {List}) => {
+      return await List.deleteOne({_id});
+    },
+    changeList: async (root, {_id, name}, {List}) => {
+      return await List.findByIdAndUpdate(
+        {_id},
+        {$set: {name}},
+        {new: true}
+      )
+    },
+    signupUser: async(root, {username, password}, {User}) => {
+      const newUser = await new User({
+        username,
+        password
+      }).save();
+      return { token: createToken(newUser, process.env.SECRET, '1hr')}
+    },
+    signinUser: async(root, {username, password}, {User}) => {
+       const user = await User.findOne({username, password});
+       if (!user) {
+         throw new Error('User not found!');
+       }
+      return { token: createToken(user, process.env.SECRET, '1000hr')}
     }
   }
 };
