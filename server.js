@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({path: 'variables.env'});
 
@@ -38,7 +39,7 @@ app.use(async (req, res, next) => {
  }
   next();
 });
-app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
+// app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 app.use('/graphql', bodyParser.json(), graphqlExpress(({currentUser}) => ({
   schema,
   context: {
@@ -54,6 +55,13 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('DB connected'))
   .catch(err => console.error(err));
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 2222;
 
