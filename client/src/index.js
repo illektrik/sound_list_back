@@ -10,7 +10,7 @@ import App from './components/App/App';
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  uri: 'http://playlistsound.herokuapp.com/graphql',
+  uri: 'https://playlistsound.herokuapp.com/graphql',
   cache,
   fetchOptions: {
     credentials: 'include'
@@ -34,7 +34,7 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-<ApolloProvider client={client}>
-  <App />
+  <ApolloProvider client={client}>
+    <App />
   </ApolloProvider>
   , document.getElementById('root'));
