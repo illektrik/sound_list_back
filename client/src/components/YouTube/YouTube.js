@@ -75,7 +75,7 @@ class YouTubePlayer extends React.Component {
         <button
           onClick={this.nextSong}
         >
-          Next
+          Следующий трек
         </button>
       </div>
     );

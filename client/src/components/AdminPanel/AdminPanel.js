@@ -11,7 +11,7 @@ const AdminPanel = (props) => {
     password: ''
   });
 
-  const [signinUser] = useMutation(SIGN_IN);
+  const [signinUser, {error}] = useMutation(SIGN_IN);
 
   const handleChange = (event) => {
     const {name, value} = event.target;
@@ -29,6 +29,7 @@ const AdminPanel = (props) => {
       await props.history.push("/admin");
     }
   };
+  if (error) return <p>{error.message}</p>;
   return (
     <>
       <h3 className="admin__h3">Войдите, что бы редактировать плейлисты</h3>
