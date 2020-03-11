@@ -1,0 +1,9 @@
+.ycontainer {
+    width: 60vw;
+}
+
+@media only screen and (max-width: 900px) {
+    .ycontainer {
+        width: auto;
+    }
+  }

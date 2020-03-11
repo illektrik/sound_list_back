@@ -3,6 +3,7 @@ import YouTube from 'react-youtube';
 import { Query } from 'react-apollo'
 
 import { GET_PAY_LIST } from "../../queries";
+import './index.css';
 
 class YouTubePlayer extends React.Component {
   state = {
@@ -45,7 +46,7 @@ class YouTubePlayer extends React.Component {
       }
     };
     return (
-      <div>
+      <div className='ycontainer'>
         <Query query={GET_PAY_LIST} variables={{playList: this.props.playList}}>
           {({loading, data}) => {
             if (loading) return <p>Loading...</p>;

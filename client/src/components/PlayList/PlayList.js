@@ -32,7 +32,7 @@ const PlayList = ({user}) => {
         className="playlist_area__div"
         key={i}
         style={{
-          background: item.name === openList ? 'darkgray' : 'black',
+          background: item.name === openList ? '#2a9fd6' : 'black',
           color: item.name === openList ? 'antiquewhite' : null
         }}
         onClick={ (event) => choseList(event) }
