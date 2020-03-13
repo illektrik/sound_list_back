@@ -19,7 +19,7 @@ const Main = (props) => {
       className="playlist_area__div"
       key={i}
       style={{
-        background: item.name === openList ? '#167ac6' : '#167ac6',
+        // background: item.name === openList ? '#167ac6' : '#167ac6',
         color: item.name === openList ? 'antiquewhite' : null
       }}
       onClick={ (event) => choseList(event) }
