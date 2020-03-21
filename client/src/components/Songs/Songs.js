@@ -20,11 +20,11 @@ const Songs = (props) => {
   });
 
   const { loading, data } = useQuery(GET_PAY_LIST, {
-    variables: {playList: props.playlist}
+    variables: {playList: props.playList, playListId: props.id}
   });
 
   const [updateSong] = useMutation(UPDATE_SONG, {
-    refetchQueries: [{query: GET_PAY_LIST, variables: {playList: props.playlist}}]
+    refetchQueries: [{query: GET_PAY_LIST, variables: {playList: props.playList}}]
   });
 
   const { name, author, link } = newSong;
@@ -32,7 +32,7 @@ const Songs = (props) => {
   const addingSong = (event, addSong) => {
     event.preventDefault();
     addSong({
-      variables: {name, author, link, playList: props.playlist, playListId: props.id}
+      variables: {name, author, link, playListId: props.id}
     });
     setOpenAdd(false);
   };
@@ -73,7 +73,7 @@ const Songs = (props) => {
 
   if (loading) return <p>Loading</p>;
   const songs = data.getPlayList.map(item => (
-    <Mutation mutation={DELETE_SONG} variables={{id: item._id}} refetchQueries={[{query: GET_PAY_LIST, variables: {playList: props.playlist}}]} key={item._id}>
+    <Mutation mutation={DELETE_SONG} variables={{id: item._id}} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]} key={item._id}>
       { (deleteSong) => (
         <div className="songs_area_title" >
           { songId === item._id
@@ -123,7 +123,7 @@ const Songs = (props) => {
           { openAdd ? <span>Отменить</span> : <span>Добавить новый трек</span>}
         </button>
         { openAdd ? (
-          <Mutation mutation={NEW_SONG} refetchQueries={[{query: GET_PAY_LIST, variables: {playList: props.playlist}}]}>
+          <Mutation mutation={NEW_SONG} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]}>
             {(addSong) => (
               <form className="new_playlist new_song" onSubmit={(event) => addingSong(event, addSong)}>
                 <input type="text" placeholder="Автор" required onChange={event => setNewSong({...newSong, author: event.target.value}) }/>

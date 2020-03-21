@@ -19,13 +19,12 @@ export const GET_ALL_LISTS = gql`
 `;
 
 export const GET_PAY_LIST = gql`
-  query($playList: String!, $playListId: String!) {
-    getPlayList(playList: $playList, playListId: $playlist) {
+  query($playListId: String!) {
+    getPlayList(playListId: $playListId) {
       _id
       name
       link
       author
-      playList
       playListId
     }
   }
@@ -51,13 +50,13 @@ export const NEW_PLAYLIST = gql`
 `;
 
 export const NEW_SONG = gql`
-  mutation($name: String!, $author: String!, $link: String!, $playList: String!, $playListId: String!) {
-    addSong(name: $name, playList: $playList, link: $link, author: $author, playListId: $playListId) {
+  mutation($name: String!, $author: String!, $link: String!, $playListId: String!) {
+    addSong(name: $name, link: $link, author: $author, playListId: $playListId) {
       _id
       name
-      playList
       link
       author,
+      playListId
     }
   }
 `;

@@ -7,10 +7,6 @@ const SongSchema = new Schema({
     type: String,
     required: true
   },
-  playList: {
-    type: String,
-    required: true
-  },
   playListId: {
     type: String,
     required: true
