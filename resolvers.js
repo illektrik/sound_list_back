@@ -12,8 +12,8 @@ exports.resolvers = {
     getAllSongsLists: async (root, args, {Song}) => {
       return await Song.find();
     },
-    getPlayList: async(root, {playList}, {Song}) => {
-      return await Song.find({playList})
+    getPlayList: async(root, {playList, playListId}, {Song}) => {
+      return await Song.find({playList, playListId})
     },
     getAllLists: async (root, args, {List}) => {
       return await List.find();
@@ -31,8 +31,8 @@ exports.resolvers = {
     addList: async (root, {name}, {List}) => {
       return await new List({name}).save();
     },
-    addSong: async (root, {name, playList, link, author}, {Song}) => {
-      return await new Song({name, playList, link, author}).save();
+    addSong: async (root, {name, playList, link, author, playListId}, {Song}) => {
+      return await new Song({name, playList, link, author, playListId}).save();
     },
     deleteSong: async (root, {_id}, {Song}) => {
       return await Song.deleteOne({_id});

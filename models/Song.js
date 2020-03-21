@@ -11,6 +11,10 @@ const SongSchema = new Schema({
     type: String,
     required: true
   },
+  playListId: {
+    type: String,
+    required: true
+  },
   link: {
     type: String,
     required: true

@@ -7,12 +7,16 @@ import '../PlayList/index.css';
 import {GET_ALL_LISTS} from "../../queries";
 
 const Main = (props) => {
-  const [ openList, setOpenList ] = useState('');
+  const [ openList, setOpenList ] = useState('Test list');
+  const [id, setId] = useState('5e760587e7a2591cf44e8bf1');
 
   const lists = useQuery(GET_ALL_LISTS);
   if (lists.loading) return <p>Loading...</p>;
 
- if (openList === '') setOpenList(lists.data.getAllLists[0].name);
+ if (openList === '') {
+   setOpenList(lists.data.getAllLists[0].name);
+   setId(lists.data.getAllLists[0]._id);
+ }
 
   const playlists = lists.data.getAllLists.map((item, i) => (
     <div
@@ -22,15 +26,16 @@ const Main = (props) => {
         // background: item.name === openList ? '#167ac6' : '#167ac6',
         color: item.name === openList ? 'antiquewhite' : null
       }}
-      onClick={ (event) => choseList(event) }
+      onClick={ (event) => choseList(event, item._id) }
 
     >
       <p className="playlist_area__p">{item.name}</p>
     </div>
   ));
 
-  const choseList = (event) => {
+  const choseList = (event, id) => {
     setOpenList(event.target.innerHTML);
+    setId(id);
   };
 
   return (
@@ -41,7 +46,7 @@ const Main = (props) => {
           {playlists}
         </div>
       </div>
-      <YouTubePlayer playList={openList} />
+      <YouTubePlayer playList={openList} id={id}/>
     </div>
   )
 };

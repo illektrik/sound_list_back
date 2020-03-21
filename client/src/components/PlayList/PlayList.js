@@ -10,6 +10,7 @@ const PlayList = ({user}) => {
   const [ openAdd, setOpenAdd ] = useState(false);
   const [ listName, setListName] = useState('');
   const [ openList, setOpenList ] = useState('');
+  const [id, setId] = useState('');
 
   const lists = useQuery(GET_ALL_LISTS);
   const [deleteList] = useMutation(DELETE_PLAYLIST, {
@@ -35,7 +36,7 @@ const PlayList = ({user}) => {
           background: item.name === openList ? '#2a9fd6' : 'black',
           color: item.name === openList ? 'antiquewhite' : null
         }}
-        onClick={ (event) => choseList(event) }
+        onClick={ (event) => choseList(event, item._id) }
 
       >
         <p className="playlist_area__p">{item.name}</p>
@@ -55,8 +56,9 @@ const PlayList = ({user}) => {
     setOpenAdd(false);
   };
 
-  const choseList = (event) => {
+  const choseList = (event, id) => {
     setOpenList(event.target.innerHTML);
+    setId(id);
   };
   if (user === 'admin') {
     return (
@@ -85,7 +87,7 @@ const PlayList = ({user}) => {
             : null
           }
         </div>
-        <Songs playlist={openList}/>
+        <Songs playlist={openList} id={id}/>
       </div>
     )
   }

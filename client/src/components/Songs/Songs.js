@@ -32,7 +32,7 @@ const Songs = (props) => {
   const addingSong = (event, addSong) => {
     event.preventDefault();
     addSong({
-      variables: {name, author, link, playList: props.playlist}
+      variables: {name, author, link, playList: props.playlist, playListId: props.id}
     });
     setOpenAdd(false);
   };

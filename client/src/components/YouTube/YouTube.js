@@ -36,7 +36,7 @@ class YouTubePlayer extends React.Component {
       }
       this.setState({randomArr: arr});
     }
-  }
+  };
   render() {
     const opts = {
       height: '390',
@@ -47,7 +47,7 @@ class YouTubePlayer extends React.Component {
     };
     return (
       <div className='ycontainer'>
-        <Query query={GET_PAY_LIST} variables={{playList: this.props.playList}}>
+        <Query query={GET_PAY_LIST} variables={{playList: this.props.playList, playListId: this.props.id}}>
           {({loading, data}) => {
             if (loading) return <p>Loading...</p>;
             const links = data.getPlayList.map(item => {

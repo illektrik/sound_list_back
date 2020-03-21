@@ -16,6 +16,7 @@ exports.typeDefs = `
     playList: String!
     link: String!
     author: String!
+    playListId: String!
   }
   
   type Token {
@@ -24,14 +25,14 @@ exports.typeDefs = `
   
   type Query {
     getAllSongsLists: [Song]
-    getPlayList(playList: String!): [Song]
+    getPlayList(playList: String!, playListId: String!): [Song]
     getAllLists: [List]
     getCurrentUser: User
   }
   
   type Mutation {
     addList(name: String!): List
-    addSong(name: String!, playList: String!, link: String!, author: String!): Song
+    addSong(name: String!, playList: String!, link: String!, author: String!, playListId: String!): Song
     deleteSong(_id: ID!): Song
     changeSong(_id: ID!, name: String!, playList: String!, link: String!, author: String!): Song
     deleteList(_id: ID!): List
