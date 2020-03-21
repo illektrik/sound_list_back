@@ -8,12 +8,12 @@ import './index.css';
 class YouTubePlayer extends React.Component {
   state = {
     song: 0,
-    playlist: '',
+    playList: '',
     randomArr: []
   };
   componentDidUpdate(prevProps) {
     if (this.props.playList !== prevProps.playList) {
-      this.setState({song: 0, playlist: '', randomArr: []})
+      this.setState({song: 0, playList: '', randomArr: []})
     }
   };
 
@@ -23,13 +23,13 @@ class YouTubePlayer extends React.Component {
   }
 
   nextSong = () => {
-    this.state.playlist[this.state.song + 1] === undefined
+    this.state.playList[this.state.song + 1] === undefined
       ? this.setState({song: 0, randomArr: []})
       : this.setState({song: this.state.song + 1});
-    if (this.state.playlist[this.state.song + 1] !== undefined) {
+    if (this.state.playList[this.state.song + 1] !== undefined) {
       const arr = this.state.randomArr;
       for ( let len = (this.state.song + 2); arr.length < len;) {
-        const num = Math.floor(Math.random() * this.state.playlist.length);
+        const num = Math.floor(Math.random() * this.state.playList.length);
         if(this.state.randomArr.indexOf(num) === -1) {
           arr.push(num);
         }
@@ -54,7 +54,7 @@ class YouTubePlayer extends React.Component {
               const link = item.link.split('=');
               return link[1]
             });
-            if (this.state.playlist === '') this.setState({playlist: data.getPlayList});
+            if (this.state.playList === '') this.setState({playList: data.getPlayList});
             if (this.state.randomArr.length === 0) this.setState({randomArr: [Math.floor(Math.random() * data.getPlayList.length)]});
             const song = this.state.randomArr.length === 1 ? this.state.randomArr[0] : this.state.randomArr[this.state.song];
             return (

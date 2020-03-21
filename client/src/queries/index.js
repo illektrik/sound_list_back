@@ -23,9 +23,9 @@ export const GET_PAY_LIST = gql`
     getPlayList(playList: $playList, playListId: $playlist) {
       _id
       name
-      playList
       link
-      author,
+      author
+      playList
       playListId
     }
   }

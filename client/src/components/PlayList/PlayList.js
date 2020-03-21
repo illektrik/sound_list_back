@@ -87,7 +87,7 @@ const PlayList = ({user}) => {
             : null
           }
         </div>
-        <Songs playlist={openList} id={id}/>
+        <Songs playList={openList} id={id}/>
       </div>
     )
   }
