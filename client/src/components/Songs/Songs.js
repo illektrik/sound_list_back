@@ -24,7 +24,7 @@ const Songs = (props) => {
   });
 
   const [updateSong] = useMutation(UPDATE_SONG, {
-    refetchQueries: [{query: GET_PAY_LIST, variables: {playList: props.playList}}]
+    refetchQueries: [{query: GET_PAY_LIST, variables: {playListId: props.id}}]
   });
 
   const { name, author, link } = newSong;
@@ -62,7 +62,7 @@ const Songs = (props) => {
           name: changeSong.name,
           author: changeSong.author,
           link: changeSong.link,
-          playList: props.playlist
+          playListId: props.id
         }
       });
     }
@@ -100,13 +100,13 @@ const Songs = (props) => {
       )}
     </Mutation>
   ));
-  if (props.playlist !== '') {
+  if (props.playList !== '') {
     return (
       <div>
         <div className="songs_area" style={{marginTop: '70px'}}>
           <div style={{display: 'flex'}}>
             <h5 style={{marginRight: '10px'}}>Плейлист:</h5>
-            <h5>{props.playlist}</h5>
+            <h5>{props.playList}</h5>
           </div>
           <div className="songs_area_title">
             <div className="songs_area__div" style={{width: '15%'}}><p style={{fontWeight: 'bold'}}>Автор</p></div>

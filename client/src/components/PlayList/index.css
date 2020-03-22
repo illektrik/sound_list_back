@@ -1,5 +1,5 @@
 .playlist_area {
-    width: 20vw;
+    width: auto;
     display: flex;
     flex-direction: column;
     text-align: center;

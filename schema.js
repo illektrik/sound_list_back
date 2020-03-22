@@ -33,7 +33,7 @@ exports.typeDefs = `
     addList(name: String!): List
     addSong(name: String!, link: String!, author: String!, playListId: String!): Song
     deleteSong(_id: ID!): Song
-    changeSong(_id: ID!, name: String!, playList: String!, link: String!, author: String!): Song
+    changeSong(_id: ID!, name: String!, playListId: String!, link: String!, author: String!): Song
     deleteList(_id: ID!): List
     changeList(_id: ID!, name: String!): List
     signupUser(username: String!, password: String!): Token

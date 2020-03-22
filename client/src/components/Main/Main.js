@@ -7,8 +7,8 @@ import '../PlayList/index.css';
 import {GET_ALL_LISTS} from "../../queries";
 
 const Main = (props) => {
-  const [ openList, setOpenList ] = useState('Test list');
-  const [id, setId] = useState('5e760587e7a2591cf44e8bf1');
+  const [ openList, setOpenList ] = useState('');
+  const [id, setId] = useState('');
 
   const lists = useQuery(GET_ALL_LISTS);
   if (lists.loading) return <p>Loading...</p>;

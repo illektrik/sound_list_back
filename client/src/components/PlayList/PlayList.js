@@ -2,14 +2,17 @@ import React, {useState} from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Mutation } from 'react-apollo';
 
-import {NEW_PLAYLIST, GET_ALL_LISTS, DELETE_PLAYLIST} from "../../queries";
+import {NEW_PLAYLIST, GET_ALL_LISTS, DELETE_PLAYLIST, UPDATE_LIST} from "../../queries";
 import Songs from "../Songs/Songs";
 import './index.css';
+import query from "apollo-cache-inmemory/lib/fragmentMatcherIntrospectionQuery";
 
 const PlayList = ({user}) => {
   const [ openAdd, setOpenAdd ] = useState(false);
   const [ listName, setListName] = useState('');
   const [ openList, setOpenList ] = useState('');
+  const [ updateList, setUpdateList ] = useState('');
+  const [ renameList, setRenameList ] = useState('');
   const [id, setId] = useState('');
 
   const lists = useQuery(GET_ALL_LISTS);
@@ -28,21 +31,60 @@ const PlayList = ({user}) => {
 
   if (lists.loading) return <p>Loading...</p>;
   const playlists = lists.data.getAllLists.map((item, i) => (
-    <div className="playlist__div" key={i}>
-      <div
-        className="playlist_area__div"
-        key={i}
-        style={{
-          background: item.name === openList ? '#2a9fd6' : 'black',
-          color: item.name === openList ? 'antiquewhite' : null
-        }}
-        onClick={ (event) => choseList(event, item._id) }
+    <Mutation mutation={UPDATE_LIST} refetchQueries={[{query: GET_ALL_LISTS}]}>
+      {(changeList) => (
+        <div className="playlist__div" key={i}>
+          {item._id === updateList
+            ? <input
+              type="text"
+              name="name"
+              required defaultValue={item.name}
+              style={{width: 'auto'}}
+              onChange={(event) => setRenameList(event.target.value)}
+            />
+            : <div
+              className="playlist_area__div"
+              key={i}
+              style={{
+                background: item.name === openList ? '#2a9fd6' : 'black',
+                color: item.name === openList ? 'antiquewhite' : null
+              }}
+              onClick={ (event) => choseList(event, item._id) }
 
-      >
-        <p className="playlist_area__p">{item.name}</p>
-      </div>
-      <button onClick={() => delList(item._id)}>Удалить</button>
-    </div>
+            >
+              <p className="playlist_area__p">{item.name}</p>
+            </div>
+          }
+          {item._id === updateList
+            ? <div>
+              <button
+                onClick={async () => {
+                  await changeList({
+                    variables: {
+                      id: updateList,
+                      name: renameList
+                    }
+                  });
+                  setUpdateList('');
+                }}
+              >
+                Сохранить
+              </button>
+              <button
+                onClick={() => {
+                  setUpdateList('');
+                  setRenameList('');
+                }}
+              >
+                Отменить
+              </button>
+            </div>
+            : <button onClick={() => setUpdateList(item._id)}>Изменить</button>
+          }
+          <button onClick={() => delList(item._id)}>Удалить</button>
+        </div>
+      )}
+    </Mutation>
   ));
 
   const addingList = (event, addList) => {

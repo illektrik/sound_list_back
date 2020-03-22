@@ -70,8 +70,8 @@ export const DELETE_SONG = gql`
 `;
 
 export const UPDATE_SONG = gql`
-  mutation ($id: ID!, $name: String!, $playList: String!, $link: String!, $author: String!) {
-    changeSong(_id: $id, name: $name, author: $author, link: $link, playList: $playList) {
+  mutation ($id: ID!, $name: String!, $playListId: String!, $link: String!, $author: String!) {
+    changeSong(_id: $id, name: $name, author: $author, link: $link, playListId: $playListId) {
       _id,
       name,
       author,
@@ -92,6 +92,14 @@ export const SIGN_IN = gql`
   mutation($username: String!, $password: String!) {
     signinUser(username: $username, password: $password) {
       token
+    }
+  }
+`;
+
+export const UPDATE_LIST = gql`
+  mutation($id: ID!, $name: String!) {
+    changeList(_id: $id, name: $name) {
+      name
     }
   }
 `;

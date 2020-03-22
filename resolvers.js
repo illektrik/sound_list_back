@@ -37,12 +37,12 @@ exports.resolvers = {
     deleteSong: async (root, {_id}, {Song}) => {
       return await Song.deleteOne({_id});
     },
-    changeSong: async (root, {_id, name, playList, link, author}, {Song}) => {
+    changeSong: async (root, {_id, name, playListId, link, author}, {Song}) => {
       return await Song.findByIdAndUpdate(
         {_id},
         {$set: {
             name,
-            playList,
+            playListId,
             link,
             author
           }},
