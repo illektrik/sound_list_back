@@ -1,5 +1,6 @@
 .ycontainer {
-    width: 60vw;
+    width: 73vw;
+    /* text-align: center; */
 }
 
 @media only screen and (max-width: 900px) {
