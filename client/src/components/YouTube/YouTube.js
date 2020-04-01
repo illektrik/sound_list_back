@@ -39,8 +39,8 @@ class YouTubePlayer extends React.Component {
   };
   render() {
     const opts = {
-      height: '390',
-      width: '640',
+      height: '480',
+      width: '840',
       playerVars: {
         autoplay: 1
       }
@@ -59,10 +59,10 @@ class YouTubePlayer extends React.Component {
             const song = this.state.randomArr.length === 1 ? this.state.randomArr[0] : this.state.randomArr[this.state.song];
             return (
               <>
-                {data.getPlayList[song] === undefined
+                {/* {data.getPlayList[song] === undefined
                   ? null
                   : <h3>{data.getPlayList[song].author} - {data.getPlayList[song].name}</h3>
-                }
+                } */}
                 <YouTube
                   videoId={links[song]}
                   opts={opts}
