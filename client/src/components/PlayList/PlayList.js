@@ -102,7 +102,7 @@ const PlayList = ({user}) => {
     setOpenList(event.target.innerHTML);
     setId(id);
   };
-  if (user === 'admin') {
+  if (user === 'dudeloid') {
     return (
       <div className="wrapper">
         <div className="playlist_div">

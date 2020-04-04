@@ -41,7 +41,7 @@ const Main = (props) => {
   return (
     <div className="main">
       <div className="playlist_div">
-        <h5>Плейлисты</h5>
+        {/* <h5>Плейлисты</h5> */}
         <div className="playlist_area">
           {playlists}
         </div>

@@ -1,8 +1,9 @@
 .main {
 display: flex;
- justify-content: space-evenly; 
+ justify-content: center; 
     padding: 30px;
     padding-top: 8%;
+    padding-right: 8%;
     /* padding-left: 1%; */
 }
 

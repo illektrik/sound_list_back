@@ -1,6 +1,13 @@
 .ycontainer {
-    width: 73vw;
-    /* text-align: center; */
+    width: auto;
+    text-align: center;
+}
+
+button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
 }
 
 @media only screen and (max-width: 900px) {
