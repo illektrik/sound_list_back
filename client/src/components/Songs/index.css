@@ -6,6 +6,7 @@
 .songs_area_title {
     display: flex;
     width: 100%;
+    color: #000;
 }
 
 .songs_area__div {
