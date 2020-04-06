@@ -72,10 +72,19 @@ const Songs = (props) => {
   const changingSong = (event) => setChangeSong({...changeSong, [event.target.name]: event.target.value});
 
   if (loading) return <p>Loading</p>;
-  const songs = data.getPlayList.map((item, i) => (
+  const arr = data.getPlayList.sort(function(a, b){
+    const nameA=a.author.toLowerCase(), nameB=b.author.toLowerCase();
+    if (nameA < nameB) //sort string ascending
+      return -1;
+    if (nameA > nameB)
+      return 1;
+    return 0; //default return value (no sorting)
+  });
+
+  const songs = arr.map((item, i) => (
     <Mutation mutation={DELETE_SONG} variables={{id: item._id}} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]} key={item._id}>
       { (deleteSong) => (
-        <div className="songs_area_title" >
+        <div className="songs_area_title" key={i}>
           <div className="songs_area__div" style={{width: '3%'}}><p>{i+1}</p></div>
           { songId === item._id
             ? <input type="text" name="author" required defaultValue={item.author} style={{width: '15%'}} onChange={(event) => changingSong(event)}/>
