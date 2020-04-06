@@ -72,10 +72,11 @@ const Songs = (props) => {
   const changingSong = (event) => setChangeSong({...changeSong, [event.target.name]: event.target.value});
 
   if (loading) return <p>Loading</p>;
-  const songs = data.getPlayList.map(item => (
+  const songs = data.getPlayList.map((item, i) => (
     <Mutation mutation={DELETE_SONG} variables={{id: item._id}} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]} key={item._id}>
       { (deleteSong) => (
         <div className="songs_area_title" >
+          <div className="songs_area__div" style={{width: '3%'}}><p>{i+1}</p></div>
           { songId === item._id
             ? <input type="text" name="author" required defaultValue={item.author} style={{width: '15%'}} onChange={(event) => changingSong(event)}/>
             : <div className="songs_area__div" style={{width: '15%'}}><p>{item.author}</p></div>
@@ -109,6 +110,7 @@ const Songs = (props) => {
             <h5>{props.playList}</h5>
           </div>
           <div className="songs_area_title">
+            <div className="songs_area__div" style={{width: '3%'}}><p style={{fontWeight: 'bold'}}>No</p></div>
             <div className="songs_area__div" style={{width: '15%'}}><p style={{fontWeight: 'bold'}}>Автор</p></div>
             <div className="songs_area__div" style={{width: '20%'}}><p style={{fontWeight: 'bold'}}>Название</p></div>
             <div className="songs_area__div"><p style={{fontWeight: 'bold'}}>Ссылка</p></div>

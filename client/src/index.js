@@ -9,7 +9,7 @@ import App from './components/App/App';
 
 const cache = new InMemoryCache();
 
-const uri = window.location.hostname === 'localhost' ? 'http://localhost:2222/graphql' : 'https://playlistsound.herokuapp.com/graphql';
+const uri = window.location.hostname === 'localhost' ? 'http://localhost:2222/graphql' : 'https://beatfeed.herokuapp.com/graphql';
 
 const client = new ApolloClient({
   uri,
