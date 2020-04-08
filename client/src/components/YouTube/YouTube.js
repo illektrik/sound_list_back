@@ -52,8 +52,13 @@ class YouTubePlayer extends React.Component {
             if (loading) return <p>Loading...</p>;
             const links = data.getPlayList.map(item => {
               const link = item.link.split('=');
-              const finalLink = link[1].split('&');
-              return finalLink[0];
+              if (link.length > 1) {
+                const finalLink = link[1].split('&');
+                return finalLink[0];
+              } else {
+                const finalLink = item.link.split('/');
+                return finalLink[finalLink.length - 1]
+              }
             });
             if (this.state.playList === '') this.setState({playList: data.getPlayList});
             if (this.state.randomArr.length === 0) this.setState({randomArr: [Math.floor(Math.random() * data.getPlayList.length)]});
