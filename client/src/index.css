@@ -6,11 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #0093E9;
-  background-image: url(/polygon2.jpg);
+  /* background-image: url(/polygon2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
-/* background: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%); */
+  background-position: top; */
+background: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%);
 
 }
 
