@@ -4,6 +4,7 @@ display: flex;
     padding: 30px;
     padding-top: 8%;
     padding-right: 10%;
+    z-index: 1000;
     /* padding-left: 1%; */
 }
 
