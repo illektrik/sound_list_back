@@ -25,7 +25,7 @@ export const GET_PAY_LIST = gql`
       name
       link
       author
-      playListId
+      playListId,
     }
   }
 `;

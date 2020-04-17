@@ -25,8 +25,30 @@
     width: 25vw;
     border: 1px solid wheat;
     padding: 15px;
+    margin-bottom: 30px;
 }
 
 .new_song input {
+    margin-bottom: 15px;
+}
+
+.new_song__btn {
+    margin: 15px;
+}
+
+.page_block {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid wheat;
+    border-right: none;
+    font-weight: bold;
+}
+
+.page_block:last-child {
+    border-right: 1px solid wheat;
+}
+
+.pages_area {
+    display: flex;
     margin-bottom: 15px;
 }

@@ -18,6 +18,8 @@ const Songs = (props) => {
     author: '',
     link: ''
   });
+  const [page, setPage] = useState(1);
+  const songsOnPage = 50;
 
   const { loading, data } = useQuery(GET_PAY_LIST, {
     variables: {playList: props.playList, playListId: props.id}
@@ -81,11 +83,25 @@ const Songs = (props) => {
     return 0; //default return value (no sorting)
   });
 
-  const songs = arr.map((item, i) => (
+  const numOfPages = Math.ceil(arr.length/songsOnPage);
+  const pages = [];
+  for (let i = 1; i <= numOfPages; i++) {
+    pages.push(i)
+  }
+
+  const showPages = pages.map((item) => (
+    <div className="page_block" key={item} style={{color: item === page ? 'white' : 'black'}} onClick={() => setPage(item)}>
+      {item}
+    </div>
+  ));
+
+  const songsArr = arr.filter((item, i) => songsOnPage * (page - 1) <= i && i < songsOnPage * page);
+
+  const songs = songsArr.map((item, i) => (
     <Mutation mutation={DELETE_SONG} variables={{id: item._id}} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]} key={item._id}>
       { (deleteSong) => (
         <div className="songs_area_title" key={i}>
-          <div className="songs_area__div" style={{width: '3%'}}><p>{i+1}</p></div>
+          <div className="songs_area__div" style={{width: '3%'}}><p>{i + 1 + songsOnPage * (page - 1)}</p></div>
           { songId === item._id
             ? <input type="text" name="author" required defaultValue={item.author} style={{width: '15%'}} onChange={(event) => changingSong(event)}/>
             : <div className="songs_area__div" style={{width: '15%'}}><p>{item.author}</p></div>
@@ -118,6 +134,27 @@ const Songs = (props) => {
             <h5 style={{marginRight: '10px'}}>Плейлист:</h5>
             <h5>{props.playList}</h5>
           </div>
+          <button
+            onClick={ () => setOpenAdd(!openAdd ) }
+            className="new_song__btn"
+          >
+            { openAdd ? <span>Отменить</span> : <span>Добавить новый трек</span>}
+          </button>
+          { openAdd ? (
+              <Mutation mutation={NEW_SONG} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]}>
+                {(addSong) => (
+                  <form className="new_playlist new_song" onSubmit={(event) => addingSong(event, addSong)}>
+                    <input type="text" placeholder="Автор" required onChange={event => setNewSong({...newSong, author: event.target.value}) }/>
+                    <input type="text" placeholder="Название" required onChange={event => setNewSong({...newSong, name: event.target.value})}/>
+                    <input type="text" placeholder="Ссылка" required onChange={event => setNewSong({...newSong, link: event.target.value})}/>
+                    <button type="submit" style={{marginTop: '15px'}}>Добавить</button>
+                  </form>
+                )}
+              </Mutation>
+            )
+            : null
+          }
+          <div className="pages_area">{showPages}</div>
           <div className="songs_area_title">
             <div className="songs_area__div" style={{width: '3%'}}><p style={{fontWeight: 'bold'}}>No</p></div>
             <div className="songs_area__div" style={{width: '15%'}}><p style={{fontWeight: 'bold'}}>Автор</p></div>
@@ -128,25 +165,7 @@ const Songs = (props) => {
           </div>
           {songs}
         </div>
-        <button
-          onClick={ () => setOpenAdd(!openAdd ) }
-        >
-          { openAdd ? <span>Отменить</span> : <span>Добавить новый трек</span>}
-        </button>
-        { openAdd ? (
-          <Mutation mutation={NEW_SONG} refetchQueries={[{query: GET_PAY_LIST, variables: {playListId: props.id}}]}>
-            {(addSong) => (
-              <form className="new_playlist new_song" onSubmit={(event) => addingSong(event, addSong)}>
-                <input type="text" placeholder="Автор" required onChange={event => setNewSong({...newSong, author: event.target.value}) }/>
-                <input type="text" placeholder="Название" required onChange={event => setNewSong({...newSong, name: event.target.value})}/>
-                <input type="text" placeholder="Ссылка" required onChange={event => setNewSong({...newSong, link: event.target.value})}/>
-                <button type="submit" style={{marginTop: '15px'}}>Добавить</button>
-              </form>
-            )}
-          </Mutation>
-        )
-          : null
-        }
+        <div className="pages_area">{showPages}</div>
       </div>
     )
   }
