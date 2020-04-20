@@ -74,6 +74,11 @@ class YouTubePlayer extends React.Component {
                   opts={opts}
                   onReady={this._onReady}
                   onEnd={this.nextSong}
+                  onError={(error) => {
+                    if (error.data === 150) {
+                      this.nextSong()
+                    }
+                  } }
                 />
               </>
             )
