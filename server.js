@@ -23,7 +23,7 @@ const schema = makeExecutableSchema({
 
 const app = express();
 const corsOptions = {
-  origin: 'http://beatfeed.herokuapp.com/',
+  origin: 'https://beatfeed.herokuapp.com/',
   credentials: true
 };
 
